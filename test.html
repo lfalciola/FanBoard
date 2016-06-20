@@ -1,10 +1,27 @@
 <html>
 	<head>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+		<script src="scripts/jquery.fullscreen-min.js"></script>
+		<style>
+			#btn-start,
+			#btn-fullscreen {
+				position: absolute; 
+				top:50%; 
+				left:50%; 
+				font-size:50px;
+			}
+
+			#btn-fullscreen {
+				display: none;
+			}
+		</style>
 	</head>
-	<body style="background-color: #000;">
 	
+	<body style="background-color: #000;">
+		<button id="btn-start" onclick="$(this).hide(); $(document).fullScreen(true); salvadora.fanBoard.executeStep();">Start!</button>
+		<button id="btn-fullscreen" onclick="$(this).hide(); $(document).fullScreen(true);">Fullscreen</button>
 	</body>
+
 	<script>
 	(function ($) {
 		window.salvadora = {};
@@ -15,7 +32,17 @@
 			sequenceIndex: 0,
 			
 			init: function () {
+				
+				$(document).bind("fullscreenchange", function() {
+					var isFullscreen = $(document).fullScreen();
+					if(!isFullscreen){
+						$('#btn-fullscreen').show();
+					}
+				});
+
+
 				namespace.sequence.push({ color: '#000', duration: 600 });
+				
 				for(var i=0; i < 100; i++) {
 					namespace.sequence.push({ color: '#FFF', duration: 100 });
 					namespace.sequence.push({ color: '#000', duration: 400 });
@@ -32,8 +59,6 @@
 					namespace.sequence.push({ color: '#FFF', duration: 100 });
 					namespace.sequence.push({ color: '#000', duration: 600 });
 				}
-
-				namespace.executeStep();
 			},
 
 			executeStep: function() { 
