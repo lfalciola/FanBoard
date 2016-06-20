@@ -104,8 +104,6 @@
 
 				namespace.sequenceIndex++;
 
-				$('body').trigger('mousemove'); // avoid idle timeout
-
 				setTimeout(function(){ namespace.executeStep(); }, sequenceStep.duration);
 			}
 		};
