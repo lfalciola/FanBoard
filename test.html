@@ -1,14 +1,20 @@
 <html>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<head>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 		<script src="scripts/jquery.fullscreen-min.js"></script>
 		<style>
+			body {
+				border: none;
+				margin: 0;
+				padding: 0;
+				background-color: #000;
+				text-align: center;
+			}
 			#btn-start,
 			#btn-fullscreen {
-				position: absolute; 
-				top:50%; 
-				left:50%; 
-				font-size:50px;
+				margin-top: 20%;
+				font-size:100px;
 			}
 
 			#btn-fullscreen {
@@ -17,7 +23,7 @@
 		</style>
 	</head>
 	
-	<body style="background-color: #000;">
+	<body>
 		<button id="btn-start" onclick="$(this).hide(); $(document).fullScreen(true); salvadora.fanBoard.executeStep();">Start!</button>
 		<button id="btn-fullscreen" onclick="$(this).hide(); $(document).fullScreen(true);">Fullscreen</button>
 	</body>
@@ -69,6 +75,8 @@
 				$('body').css('background-color', sequenceStep.color);
 
 				namespace.sequenceIndex++;
+
+				$('body').trigger('mousemove'); // avoid idle timeout
 
 				setTimeout(function(){ namespace.executeStep(); }, sequenceStep.duration);
 			}
