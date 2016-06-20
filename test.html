@@ -1,0 +1,57 @@
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	</head>
+	<body style="background-color: #000;">
+	
+	</body>
+	<script>
+	(function ($) {
+		window.salvadora = {};
+		
+		var namespace = salvadora.fanBoard = {
+
+			sequence: [],
+			sequenceIndex: 0,
+			
+			init: function () {
+				namespace.sequence.push({ color: '#000', duration: 600 });
+				for(var i=0; i < 100; i++) {
+					namespace.sequence.push({ color: '#FFF', duration: 100 });
+					namespace.sequence.push({ color: '#000', duration: 600 });
+
+					namespace.sequence.push({ color: '#FFF', duration: 100 });
+					namespace.sequence.push({ color: '#000', duration: 400 });
+
+					namespace.sequence.push({ color: '#FFF', duration: 200 });
+					namespace.sequence.push({ color: '#000', duration: 600 });
+
+					namespace.sequence.push({ color: '#FFF', duration: 100 });
+					namespace.sequence.push({ color: '#000', duration: 300 });
+
+					namespace.sequence.push({ color: '#FFF', duration: 100 });
+					namespace.sequence.push({ color: '#000', duration: 600 });
+				}
+
+				namespace.executeStep();
+			},
+
+			executeStep: function() { 
+				if(namespace.sequenceIndex >= namespace.sequence.length) return;
+
+				var sequenceStep = namespace.sequence[namespace.sequenceIndex];
+
+				$('body').css('background-color', sequenceStep.color);
+
+				namespace.sequenceIndex++;
+
+				setTimeout(function(){ namespace.executeStep(); }, sequenceStep.duration);
+			}
+		};
+	}(jQuery));
+
+	$(document).ready(function () {
+		salvadora.fanBoard.init();
+	});
+	</script>
+</html>
