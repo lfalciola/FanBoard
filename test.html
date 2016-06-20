@@ -3,6 +3,7 @@
 	<head>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 		<script src="scripts/jquery.fullscreen-min.js"></script>
+		<script src="scripts/NoSleep.min.js"></script>
 		<style>
 			body {
 				border: none;
@@ -24,8 +25,8 @@
 	</head>
 	
 	<body>
-		<button id="btn-start" onclick="$(this).hide(); $(document).fullScreen(true); salvadora.fanBoard.executeStep();">Start!</button>
-		<button id="btn-fullscreen" onclick="$(this).hide(); $(document).fullScreen(true);">Fullscreen</button>
+		<button id="btn-start" type="button">Start!</button>
+		<button id="btn-fullscreen" type="button">Fullscreen</button>
 	</body>
 
 	<script>
@@ -39,6 +40,19 @@
 			
 			init: function () {
 				
+				$('#btn-start').click(function(){
+					$(this).hide();
+
+					namespace.start();
+				});
+
+				$('#btn-fullscreen').click(function(){
+					$(this).hide();
+
+					namespace.activateFullscreen();
+				});
+
+
 				$(document).bind("fullscreenchange", function() {
 					var isFullscreen = $(document).fullScreen();
 					if(!isFullscreen){
@@ -65,6 +79,20 @@
 					namespace.sequence.push({ color: '#FFF', duration: 100 });
 					namespace.sequence.push({ color: '#000', duration: 600 });
 				}
+			},
+
+			start: function() {
+				namespace.activateFullscreen(); 
+
+				var noSleep = new NoSleep();
+
+				noSleep.enable(); // keep the screen on!
+
+				namespace.executeStep();
+			},
+
+			activateFullscreen: function() { 
+				$(document).fullScreen(true);
 			},
 
 			executeStep: function() { 
